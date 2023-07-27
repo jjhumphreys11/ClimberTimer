@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<title>Hangboard Timer</title>
+	<link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+	<p id="mainTimer"></p>
+	<p id="intervalName">...</p>
+	<br>
+	<p id="totalTimer"></p>
+	<p id="currentSetRep">Set: s/S, Rep: r/R</p>
+	<br>
+	<input type="button" class="timerButton" id="startBtn" value="Start">
+	<input type="button" class="timerButton" id="resetBtn" value="Enter/Reset"><br><br>
+	
+	<article class="regular">
+		
+		<label for="hangInput">Hang (sec):</label>
+		<input type="number" id="hangInput" placeholder="Hang Time" maxlength="3" value="10"><br>
+		
+		<label for="restInput">Rest (sec):</label>
+		<input type="number" id="restInput" placeholder="Rest Time" maxlength="3" value="30"><br><br>
+		
+		<label for="repsInput">Reps:</label>
+		<input type="number" id="repsInput" placeholder="Reps?" maxlength="3" value="4"><br>
+		
+		<label for="setsInput">Sets:</label>
+		<input type="number" id="setsInput" placeholder="Sets?" maxlength="3" value="3"><br><br>
+		
+		<label for="recoveryInput">Recovery between Sets:</label>
+		<input type="number" id="recoveryInput" placeholder="Recover Time" maxlength="3" value="120"><br><br>
+		
+	</article>
+	<input type="checkbox" id="soundCheckbox">
+	<label for"soundCheckbox">Sound On</label>
+	<br><br><br>
+	
+	<input type="button" class="workoutButton" id="beginnerBtn" value="Beginner Strength/Endurance">
+	<p class="wBtnDescription">Beginner workout for general improvement.</p>
+	<p class="wBtnDescription">Combining strength and endurance, with no maxing out.</p>
+	<br>
+	<input type="button" class="workoutButton" id="maxWeightBtn" value="Max Weight">
+	<p class="wBtnDescription">Long workout for max finger strength.</p>
+	<p class="wBtnDescription">Max hangs and long rests.</p>
+	<br>
+	<input type="button" class="workoutButton" id="strengthRepeatersBtn" value="Strength Repeats">
+	<p class="wBtnDescription">Intermediate workout for general improvement.</p>
+	<p class="wBtnDescription">Combining near-max hangs with shorter rests.</p>
+	<br>
+	<input type="button" class="workoutButton" id="repeatersBtn" value="Repeaters">
+	<p class="wBtnDescription">Endurance workout.</p>
+	<p class="wBtnDescription">Easy hangs, but minimal rest between reps.</p>
+	<br>
+	<input type="button" class="workoutButton" id="noHangsBtn" value="10min No Hangs">
+	<p class="wBtnDescription">Easy workout for tendon strength.</p>
+	<p class="wBtnDescription">Twice a day, >6hrs apart, feet never leave the ground.</p>
+	<br>
+	<label for="customInput">Custom Workout:</label>
+	<input type="text" id="customInput" placeholder="Enter Workout..." value="10h 60r 10h 60r 10h 120r 10h 120r 10h 120r 10h 120r 10h 180r 10h 180r 10h 180r 10h 180r 30h 120r 30h 120r done"><br>
+	<input type="button" class="customButton" id="customBtn" value="Enter Workout">
+	<input type="button" class="customButton" id="customBtn2" value="Start Workout">
+	<p class="cBtnDesc">Enter Workout in form [10h 50r 10h 50r done]</p>
+	
+	<script src="HangboardWorkout.js"></script>
+	
+</body>
+</html>

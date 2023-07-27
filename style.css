@@ -1,0 +1,52 @@
+body {
+	background-color: grey;
+	font-family: 'Roboto', sans-serif;
+	margin: 0;
+}
+
+#mainTimer {
+	background-color: #fff;
+	display: -webkit-inline-flexbox;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	font-size: 100px;
+	margin: 0;
+	height: 140px;
+	width: 400px;
+}
+
+#totalTimer {
+	background-color: #ddd;
+	display: -webkit-inline-flexbox;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	float: left;
+	font-size: 25px;
+	margin: 0;
+	height: 35px;
+	width: 100px;
+}
+
+#intervalName {
+	margin: 5px;
+	font-size: 25px;
+}
+
+.timerButton {
+	font-size: 30px;
+	height: 50px;
+	width: 200px;
+}
+
+.workoutButton {
+	font-size: 30px;
+	height: 50px;
+	width: 200px;
+}
+
+.wBtnDescription {
+	font-size: 12px;
+	margin: 3px;
+}
