@@ -58,6 +58,11 @@ customButton.addEventListener('click', customWorkout);
 customButton2.addEventListener('click', startCustomWorkout);
 
 function startWorkout() {
+	if (setsLeft < 1)
+	{
+		startCustomWorkout();
+		return;
+	}
 	isPaused = !isPaused;
 	startButton.value = isPaused ? 'Start' : 'Pause';
 	setsLeft = (setsLeft == setNum) ? (setNum - 1) : setsLeft;
