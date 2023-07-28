@@ -61,10 +61,7 @@ customButton.addEventListener('click', customWorkout);
 function startWorkout() {
 	isPaused = !isPaused;
 	startButton.value = isPaused ? 'Start' : 'Pause';
-	if (customFlag > 0)
-	{
-		customTimerId = setInterval(iterateCustomWorkout, 1000);
-	} else
+	if (customFlag < 0)
 	{
 		setsLeft = (setsLeft == setNum) ? (setNum - 1) : setsLeft;
 	}
@@ -72,6 +69,8 @@ function startWorkout() {
 
 function calculateWorkout() {
 	customFlag = 0;
+	clearInterval(timerId);
+	clearInterval(customTimerId);
 	hangTime = hangInput.valueAsNumber;
 	restTime = restInput.valueAsNumber;
 	repNum = repInput.valueAsNumber;
@@ -265,6 +264,10 @@ function workout5() {
 
 function customWorkout() {
 	clearInterval(customTimerId);
+	clearInterval(timerId);
+	totalTimer.innerHTML = "";
+	isPaused = true;
+	startButton.value = 'Start';
 	customWorkoutText = customInput.value;
 	
 	currentTime = 10;
@@ -274,6 +277,7 @@ function customWorkout() {
 	intervalName.innerHTML = "GET READY";
 	currentSetRep.innerHTML = customWorkoutText;
 	mainTimer.innerHTML = currentTime;
+	customTimerId = setInterval(iterateCustomWorkout, 1000);
 }
 
 /*
@@ -285,6 +289,9 @@ function startCustomWorkout() {
 */
 
 function iterateCustomWorkout() {
+	if (!isPaused)
+	{
+	
 	if (currentTime >= 1 ) {
 		currentTime -= 1;
 		mainTimer.innerHTML = currentTime;
@@ -306,5 +313,7 @@ function iterateCustomWorkout() {
 		customWorkoutText = customWorkoutText.slice(letterIndex + 1);
 		mainTimer.innerHTML = currentTime;
 		currentSetRep.innerHTML = customWorkoutText;
+	}
+	
 	}
 }
