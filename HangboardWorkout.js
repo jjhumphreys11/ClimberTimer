@@ -50,25 +50,28 @@ var customWorkoutText = "";
 var currentTime = 0;
 var nextTime = 0;
 var letterIndex = 0;
+var customFlag = 0;
 
 const customInput = document.getElementById('customInput');
 const customButton = document.getElementById('customBtn');
-const customButton2 = document.getElementById('customBtn2');
+//const customButton2 = document.getElementById('customBtn2');
 customButton.addEventListener('click', customWorkout);
-customButton2.addEventListener('click', startCustomWorkout);
+//customButton2.addEventListener('click', startCustomWorkout);
 
 function startWorkout() {
-	if (setsLeft < 1)
-	{
-		startCustomWorkout();
-		return;
-	}
 	isPaused = !isPaused;
 	startButton.value = isPaused ? 'Start' : 'Pause';
-	setsLeft = (setsLeft == setNum) ? (setNum - 1) : setsLeft;
+	if (customFlag > 0)
+	{
+		customTimerId = setInterval(iterateCustomWorkout, 1000);
+	} else
+	{
+		setsLeft = (setsLeft == setNum) ? (setNum - 1) : setsLeft;
+	}
 }
 
 function calculateWorkout() {
+	customFlag = 0;
 	hangTime = hangInput.valueAsNumber;
 	restTime = restInput.valueAsNumber;
 	repNum = repInput.valueAsNumber;
@@ -265,6 +268,7 @@ function customWorkout() {
 	customWorkoutText = customInput.value;
 	
 	currentTime = 10;
+	customFlag = 1;
 	
 	mainTimer.style.backgroundColor = 'skyblue';
 	intervalName.innerHTML = "GET READY";
@@ -272,11 +276,13 @@ function customWorkout() {
 	mainTimer.innerHTML = currentTime;
 }
 
+/*
 function startCustomWorkout() {
 	//start a countdown somehow, using HANG and REST, etc
 	customWorkout();
 	customTimerId = setInterval(iterateCustomWorkout, 1000);
 }
+*/
 
 function iterateCustomWorkout() {
 	if (currentTime >= 1 ) {
