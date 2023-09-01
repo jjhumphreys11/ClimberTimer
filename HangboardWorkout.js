@@ -61,7 +61,7 @@ customButton.addEventListener('click', customWorkout);
 function startWorkout() {
 	isPaused = !isPaused;
 	startButton.value = isPaused ? 'Start' : 'Pause';
-	if (customFlag < 0)
+	if (customFlag == 0)
 	{
 		setsLeft = (setsLeft == setNum) ? (setNum - 1) : setsLeft;
 	}
@@ -91,8 +91,7 @@ function calculateWorkout() {
 	updateTimer();
 	isPaused = true;
 	startButton.value = 'Start';
-	intervalName.innerHTML = "GET READY";
-	mainTimer.style.backgroundColor = 'skyblue';
+	getReady();
 	currentSetRep.innerHTML = "Set: " + "0/" + setNum + ", Rep: " + "0/" + repNum;
 	timerId = setInterval(updateTimer, 1000);
 	
@@ -113,8 +112,7 @@ function updateMainTimer() {
 			//if current interval is 'get ready', next is hang
 			currentInterval = 1;
 			mainSeconds = hangTime-1;
-			intervalName.innerHTML = "HANG";
-			mainTimer.style.backgroundColor = 'tomato';
+			hang();
 			hangsLeft--;
 			currentSetRep.innerHTML = "Set: " + (setNum - setsLeft) + "/" + setNum + ", Rep: " + (repNum - restsLeft) + "/" + repNum;
 			
@@ -123,20 +121,17 @@ function updateMainTimer() {
 			if (restsLeft > 0) {
 				currentInterval = 2;
 				mainSeconds = restTime-1;
-				intervalName.innerHTML = "REST";
-				mainTimer.style.backgroundColor = 'lawngreen';
+				rest();
 				restsLeft--;
 			} else if (setsLeft > 0) {
 				currentInterval = 3;
 				mainSeconds = recoveryTime-readyTime-1;
-				intervalName.innerHTML = "RECOVERY";
-				mainTimer.style.backgroundColor = 'orange';
+				recover();
 			} else {
 				//workout is complete
 				totalTime = 0;
 				isPaused = true;
-				intervalName.innerHTML = "DONE";
-				mainTimer.style.backgroundColor = 'gold';
+				done();
 				clearInterval(timerId);
 				
 			}
@@ -145,8 +140,7 @@ function updateMainTimer() {
 			//if current interval is rest, next is hang
 			currentInterval = 1;
 			mainSeconds = hangTime-1;
-			intervalName.innerHTML = "HANG";
-			mainTimer.style.backgroundColor = 'tomato';
+			hang();
 			hangsLeft--;
 			currentSetRep.innerHTML = "Set: " + (setNum - setsLeft) + "/" + setNum + ", Rep: " + (repNum - restsLeft) + "/" + repNum;
 			
@@ -157,8 +151,7 @@ function updateMainTimer() {
 			hangsLeft = repNum;
 			restsLeft = repNum - 1;
 			setsLeft--;
-			intervalName.innerHTML = "GET READY";
-			mainTimer.style.backgroundColor = 'skyblue';
+			getReady();
 		}
 	}
 	
@@ -174,7 +167,7 @@ startButton.addEventListener('click', startWorkout);
 resetButton.addEventListener('click', calculateWorkout);
 
 document.addEventListener('keyup', event => {
-	if (event.code === 'Space') {
+	if (event.code == 'Space') {
 		startWorkout();
 	}
 });
@@ -194,9 +187,8 @@ function updateTimer() {
 			//workout is complete
 			totalTime = 0;
 			isPaused = true;
-			intervalName.innerHTML = "DONE";
+			done();
 			clearInterval(timerId);
-			mainTimer.style.backgroundColor = 'gold';
 		}
 	}
 }
@@ -273,47 +265,58 @@ function customWorkout() {
 	currentTime = 10;
 	customFlag = 1;
 	
-	mainTimer.style.backgroundColor = 'skyblue';
-	intervalName.innerHTML = "GET READY";
+	getReady();
 	currentSetRep.innerHTML = customWorkoutText;
 	mainTimer.innerHTML = currentTime;
 	customTimerId = setInterval(iterateCustomWorkout, 1000);
 }
 
-/*
-function startCustomWorkout() {
-	//start a countdown somehow, using HANG and REST, etc
-	customWorkout();
-	customTimerId = setInterval(iterateCustomWorkout, 1000);
-}
-*/
-
 function iterateCustomWorkout() {
-	if (!isPaused)
-	{
+	if (!isPaused) {
 	
-	if (currentTime >= 1 ) {
-		currentTime -= 1;
-		mainTimer.innerHTML = currentTime;
-	} else {
-		letterIndex = customWorkoutText.indexOf(" ");
-		nextTime = Number(customWorkoutText.slice(0, letterIndex - 1));
-		currentTime = nextTime - 1;
-		if ( customWorkoutText[letterIndex-1] == 'h') {
-			intervalName.innerHTML = "HANG";
-			mainTimer.style.backgroundColor = 'tomato';
-		} else if (customWorkoutText[letterIndex-1] == 'r') {
-			intervalName.innerHTML = "REST";
-			mainTimer.style.backgroundColor = 'lawngreen';
+		if (currentTime >= 1 ) {
+			currentTime -= 1;
+			mainTimer.innerHTML = currentTime;
 		} else {
-			intervalName.innerHTML = "DONE";
-			mainTimer.style.backgroundColor = 'gold';
-			clearInterval(customTimerId);
+			letterIndex = customWorkoutText.indexOf(" ");
+			nextTime = Number(customWorkoutText.slice(0, letterIndex - 1));
+			currentTime = nextTime - 1;
+			if ( customWorkoutText[letterIndex-1] == 'h') {
+				hang();
+			} else if (customWorkoutText[letterIndex-1] == 'r') {
+				rest();
+			} else {
+				done();
+				clearInterval(customTimerId);
+			}
+			customWorkoutText = customWorkoutText.slice(letterIndex + 1);
+			mainTimer.innerHTML = currentTime;
+			currentSetRep.innerHTML = customWorkoutText;
 		}
-		customWorkoutText = customWorkoutText.slice(letterIndex + 1);
-		mainTimer.innerHTML = currentTime;
-		currentSetRep.innerHTML = customWorkoutText;
 	}
-	
-	}
+}
+
+function hang() {
+	intervalName.innerHTML = "HANG";
+	mainTimer.style.backgroundColor = 'tomato';
+}
+
+function rest() {
+	intervalName.innerHTML = "REST";
+	mainTimer.style.backgroundColor = 'lawngreen';
+}
+
+function done() {
+	intervalName.innerHTML = "DONE";
+	mainTimer.style.backgroundColor = 'gold';
+}
+
+function getReady() {
+	mainTimer.style.backgroundColor = 'skyblue';
+	intervalName.innerHTML = "GET READY";
+}
+
+function recover() {
+	intervalName.innerHTML = "RECOVERY";
+	mainTimer.style.backgroundColor = 'orange';
 }
